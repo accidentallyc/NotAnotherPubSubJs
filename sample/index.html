@@ -13,6 +13,22 @@ subscribe("jquery ready", function(){
 subscribe("jquery ready", function(){
     console.log("Run 3")
      $("#target").append("Subscribed to: jQuery ready 2<br/>")
+     publish("with arguments",["hello"," ","world"])
+     publish("with this",null,[1,2,3])
+});
+
+subscribe("with arguments", function(a,b,c){
+    console.log("with arguments")
+     $("#target").append("Subscribed to: with arguments "+a+b+c+"<br/>")
+});
+
+subscribe("with this", function(){
+    console.log("with this")
+     $("#target").append("Subscribed to: with this<br/>")
+
+     for( var x=0; x< this.length; x++ ){
+        $("#target").append(this[x] + "<br/>")
+     }
 });
 
 subscribe("APILOAD", function(){
