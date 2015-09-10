@@ -45,6 +45,10 @@ subscribe("APILOAD", function(){
 
 
 publish("APILOAD");
+
+subscribe("jquery ready", function(){
+    $("#target").append("Wait a minute, this was subscribed AFTER the publish. Neat")
+})
 </script>
 
 </pre>
