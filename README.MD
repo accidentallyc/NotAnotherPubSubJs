@@ -11,16 +11,19 @@ It's light and uses publish/subscribe as their function names.
 ```
 
 ```javascript
-subscribe("basic", function(){ //do something });
-subscribe("basic", function(){ //do something });
+subscribe("basic", function(){ /*do something*/ });
+subscribe("basic", function(){ /*do something*/ });
 publish("basic")
 
-subscribe("withArgs", function(a,b,c){ //do something with a b c});
-subscribe("withArgs", function(a,b,c){ //do something with a b c});
+subscribe("withArgs", function(a,b,c){ /*do something with a b c*/ });
+subscribe("withArgs", function(a,b,c){ /*do something with a b c*/ });
 publish("withArgs",["a","b","c"])
 
-subscribe("withThis", function(){ //do something with this});
-subscribe("withThis", function(){ //do something with this});
+subscribe("withThis", function(){ /*do something with this*/ });
+subscribe("withThis", function(){ /*do something with this*/ });
 publish("withArgs",null, valueForThis)
 
+//recent update - this now works
+publish("every-good-boy-does-fine", ["father-always-comes-early"] )
+subscribe("every-good-boy-does-fine", function(a){ /* a == 'father-always-comes-early' */ } )
 ```
