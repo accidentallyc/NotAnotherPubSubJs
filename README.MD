@@ -37,7 +37,7 @@ subscribe("every-good-boy-does-fine", function(a){ /* a == 'father-always-comes-
 
 ***Custom Javascript*** 
 ```javascript
-subscribe(['jQuery,someGoogleApi'], function(){
+subscribe(['jQuery','someGoogleApi'], function(){
 	//execute your custom code
 })
 ```
