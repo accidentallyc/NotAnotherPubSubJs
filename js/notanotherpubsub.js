@@ -1,10 +1,10 @@
 !function(){
-var topics = {};
-var publist = {}
+var topics = {}     // Dictionary of all topics
+var publist = {}    // Dictionary of all published topics to allow late subscriptions to get published
 window.subscribe = subscribe
 window.publish = publish
 
-function subscribe(topic,func){
+function subscribe(topic,func){     // Basic subscribe interface
     if( topic instanceof Array ) {
         var topics = topic.sort()
         pubsub_multi_subscribe(topics,func);
@@ -52,7 +52,7 @@ function pubsub_multi_subscribe(topics,func){
                     call_args[ topic ] = arguments;
                     call_counter++;
                     if( call_counter == topics.length ){
-                        $.vts.publish(call_topic, call_args);
+                       publish(call_topic, call_args);
                     }
                 });
             }();//anonymous scoping function;
