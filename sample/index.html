@@ -50,6 +50,19 @@ subscribe("jquery ready", function(){
     $("#target").append("Wait a minute, this was subscribed AFTER the publish. Neat")
 })
 
+// Let us test removing subscriptions!
+
+//Store id as subscribes returns a unique id
+var sub_id = subscribe('test_remove', function(){
+    document.getElementById("target").innerHTML += "Subscribed to: test_remove<br/>"
+})
+
+publish("test_remove");
+
+unsubscribe(sub_id)
+
+publish("test_remove");
+
 </script>
 
 </pre>
