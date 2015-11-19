@@ -46,7 +46,7 @@ function pubsub_single_subscribe(topic,func){
     
 
 function pubsub_multi_subscribe(topics,func){
-    !function(){
+    return (function(){
         var call_func = func
         var call_topic = "__callback__:" + topics.join("+")
         var call_counter = 0
@@ -76,7 +76,7 @@ function pubsub_multi_subscribe(topics,func){
             }();//anonymous scoping function;
         }
         return sub_info
-    }();
+    }());
 }//func pubsub_multi_subscribe
     
 function publish(topic,args,valueForThis){
