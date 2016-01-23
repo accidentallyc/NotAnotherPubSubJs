@@ -41,6 +41,7 @@ subscribe(['jQuery','someGoogleApi'], function(){
 	//execute your custom code
 })
 ```
+Looks like angular dependency injection right? Almost.
 
 ***jQuery Javascript*** 
 ```html
