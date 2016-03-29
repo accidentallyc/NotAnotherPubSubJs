@@ -33,7 +33,7 @@ You can also pass an event as a parameter to the publish.
 For the small use case that you need a repetitive action that is decoupled from the caller,
 or the scope of the caller.
 
-### Basic Examples ###
+### Basic Example ###
 ```html
 <script src="notanotherpubsub.min.js"></script>
 <div id='counter'>0</div>
@@ -45,5 +45,22 @@ var ctr = 0
 subscribe("addCounter", function(){
 	ctr++
 	document.getElementById('counter').innerHTML = ctr
+})
+```
+
+### Documentation ###
+```javascript
+subscribe('name',callback)
+publish('name', data)
+```
+
+#### Publish ####
+Data must always be an array. The order of the array matters. If an array looks like this
+```javascript
+publish('array',[1,'a',{},window])
+```
+Then its subscribe may be written like this
+```javascript
+subscribe('array',function(number,string,object,win){
 })
 ```
