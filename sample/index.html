@@ -1,69 +1,101 @@
 <body>
-<style>script{ display:block; }</style>
+<script src="../js/notanotherpubsub.js"></script>
+<style>
+  html,body { margin:0;, padding:0;}
+  *{ font-family: Monospace; line-height: 18px;}
+  script{ display:block; white-space: pre;}
+  td {   padding: 1em; vertical-align: top; }
+  tr:nth-child(even) {   background: #F7F5F5; }
+  td:nth-child(2){ border-left: thin solid black;}
+  table{ width: 100%;}
+  new {
+    display:block;
+    color:green;
+    font-weight:bold;
+  }
+</style>
 <div id="target" style="position:absolute; right:1em; top:1em;"></div>
 
-<pre>
-<script src="../js/notanotherpubsub.js"></script>
-<script>
-subscribe("jquery ready", function(){
-    console.log("Run 2")
-    $("#target").append("Subscribed to: jQuery ready 1<br/>")
-});
+<table cellspacing="0">
+  <tr>
+    <th>Script</th>
+    <th>Descp</th>
+  </tr>
 
-subscribe("jquery ready", function(){
-    console.log("Run 3")
-     $("#target").append("Subscribed to: jQuery ready 2<br/>")
-     publish("with arguments",["hello"," ","world"])
-     publish("with this",null,[1,2,3])
-});
+  <tr>
+    <td>
+      <script>
+        subscribe("init", function(){
+          var target = document.getElementById("ELEM_INIT_1")
+          target.innerHTML += "<new>`Init` was published</new>"
 
-subscribe("with arguments", function(a,b,c){
-    console.log("with arguments")
-     $("#target").append("Subscribed to: with arguments "+a+b+c+"<br/>")
-});
+          var script = document.createElement("script");
+          script.src = "https://code.jquery.com/jquery-2.1.4.min.js";
+          script.onload = function(){
+            setTimeout(function(){
+              //Add delay so effects are made clear
+              publish("jQuery",[jQuery])
+            },400)
+          }
+          document.body.appendChild(script);
+        })
+      </script>
+    </td>
+    <td id="ELEM_INIT_1">
+      Function is now subscribed to `init`
+    </td>
+  </tr>
 
-subscribe("with this", function(){
-    console.log("with this")
-     $("#target").append("Subscribed to: with this<br/>")
+  <tr>
+    <td>
+      <script>
+      setTimeout(function() {
+        publish("init")
+      },700)
+      </script>
+    </td>
+    <td>Publishing Init</td>
+  </tr>
 
-     for( var x=0; x< this.length; x++ ){
-        $("#target").append(this[x] + "<br/>")
-     }
-});
+  <tr>
+    <td>
+      <script>
+        subscribe("jQuery", function($){
+          $("#ELEM_JQUERY_1").append("<new>`jQuery` has been published</new>")
+        })
+      </script>
+    </td>
+    <td id="ELEM_JQUERY_1">
+      Function is now subcribed to jQuery
+    </td>
+  </tr>
 
-subscribe("APILOAD", function(){
-    console.log("Run 1")
-    document.getElementById("target").innerHTML = "Subscribed to: APILOAD<br/>"
+  <tr>
+    <td>
+      <script>
+        subscribe("init", function($){
+          /* On init set this interval that publishes */
+          /* SOmething every 1 second */
+          var target = document.getElementById("ELEM_TIMER_1")
+          var pre = 'Function is now subscribed to `timer` - '
+          var time = 0
+          setInterval(function(){
+            time += 1
+            publish('timer', [time,pre,target])
+          },1000)
+        })
 
-    var script = document.createElement("script");
-    script.src = "https://code.jquery.com/jquery-2.1.4.min.js";
-    script.onload = function(){
-        publish("jquery ready")
-    }
-    document.body.appendChild(script);
-});
+        subscribe("timer",function(time,pre,target){
+          target.innerHTML = pre + time + ' secs'
+        })
+      </script>
+    </td>
+    <td id="ELEM_TIMER_1">
+      Function is now subcribed to jQuery
+    </td>
+  </tr>
+</table>
 
-
-publish("APILOAD");
-
-subscribe("jquery ready", function(){
-    $("#target").append("Wait a minute, this was subscribed AFTER the publish. Neat")
-})
-
-// Let us test removing subscriptions!
-
-//Store id as subscribes returns a unique id
-var sub_id = subscribe('test_remove', function(){
-    document.getElementById("target").innerHTML += "Subscribed to: test_remove<br/>"
-})
-
-publish("test_remove");
-
-unsubscribe(sub_id)
-
-publish("test_remove");
-
-</script>
 
 </pre>
 </body>
